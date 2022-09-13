@@ -1,10 +1,9 @@
 function postParams (request) {
-    Object.defineProperty(request, 'posts', {
+    Object.defineProperty(request, 'postId', {
         configurable: true,
         enumerable: true,
-        get() { return parseInt(request.params.postId)}
+        get() { return parseInt(this.params.postId)}
     })
-    console.log()
 }
 
 module.exports = postParams

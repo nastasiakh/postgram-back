@@ -1,36 +1,35 @@
 const express = require('express')
+const {PostsRepository} = require('../repositories/posts_repository')
 const router = express.Router()
 
-router.get('/posts', (req, res) =>{
-    res.send('All posts')
-})
+const repo = new PostsRepository()
 
-router.get('/posts/:postId', (req, res) =>{
-    const postId = req.params.postId
-    const post = {
-        postId,
-        title: 'Post1',
-        author: 'Me'
-    }
-    res.json(post)
+router.get('/', async (req, res) =>{
+    res.json(await repo.getAll());
 })
-router.post('/posts/', (req, res) =>{
-    const postBody = req.body
-    res.send(`Patch with ${JSON.stringify(postBody)}`)
+router.get('/:postId', async (req, res) =>{
+    const postId = req.postId;
+    res.json(await repo.getOne(postId));
 })
-
-router.patch('/posts/:postId', (req, res) =>{
-    const postId = req.params.postId
-    res.send(`Patch with ${postId}`)
+router.post('/', async (req, res) =>{
+    const postBody = req.body;
+    res.json(await repo.create(postBody));
 })
-
-router.delete('/posts', (req, res) =>{
-    res.send('Delete all posts')
+router.put('/:postId', async (req, res) =>{
+    const postId = req.postId;
+    const postBody = req.body;
+    res.json(await repo.replaceOne(postId, postBody));
 })
-
-router.delete('/posts/:postId', (req, res) =>{
-    const postId = req.params.postId
-    res.send(`Deleted post`)
+router.patch('/:postId', async (req, res) =>{
+    const postId = req.postId;
+    const postBody = req.body;
+    res.json(await repo.updateOne(postId));
+})
+router.delete('/:postId', async(req, res) =>{
+    const postId = req.postId
+    const result = await repo.getAll()
+    await repo.deleteOne(postId)
+    res.json(result)
 })
 
 module.exports = router

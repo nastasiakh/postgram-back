@@ -8,13 +8,9 @@ app.get('/', (req, res) => {
     res.send('hello from first route')
 })
 app.use(bodyParser.json());
-app.use(posts);
+app.use('/posts',posts);
 
-Object.defineProperty(app.request, 'posts', {
-    configurable: true,
-    enumerable: true,
-    get() { return parseInt(this.params.postId)}
-})
+paramsSettings(app.request);
 
 app.listen(3000, (req, res) => {
     console.log('Postgram is ready...')
