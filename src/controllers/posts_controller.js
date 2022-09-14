@@ -15,15 +15,14 @@ router.post('/', async (req, res) =>{
     const postBody = req.body;
     res.json(await repo.create(postBody));
 })
-router.put('/:postId', async (req, res) =>{
-    const postId = req.postId;
+router.put('/', async (req, res) =>{
     const postBody = req.body;
-    res.json(await repo.replaceOne(postId, postBody));
+    res.json(await repo.replaceOne(postBody));
 })
 router.patch('/:postId', async (req, res) =>{
     const postId = req.postId;
     const postBody = req.body;
-    res.json(await repo.updateOne(postId));
+    res.json(await repo.updateOne(postId, postBody));
 })
 router.delete('/:postId', async(req, res) =>{
     const postId = req.postId
