@@ -11,7 +11,8 @@ app.get('/', (req, res) => {
 app.use(bodyParser.json());
 app.use('/posts',posts);
 
-paramsSettings(app.request);
+paramsSettings.postParams(app.request);
+paramsSettings.userParams(app.request);
 
 app.listen(3000, (req, res) => {
     console.log('Postgram is ready...')
