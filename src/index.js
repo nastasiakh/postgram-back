@@ -10,6 +10,10 @@ app.get('/', (req, res) => {
 })
 app.use(bodyParser.json());
 app.use('/posts',posts);
+app.use((err, req, res, next) => {
+    let {code, message } = err;
+    res.status(err.http_code).json({code, message});
+})
 
 paramsSettings.postParams(app.request);
 paramsSettings.userParams(app.request);

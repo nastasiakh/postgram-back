@@ -4,12 +4,28 @@ const router = express.Router()
 
 const repo = new PostsRepository()
 
-router.get('/', async (req, res) =>{
-    res.json(await repo.getAll());
+router.get('/', async (req, res, next) =>{
+    try{
+        const items = await repo.getAll()
+        res.json(items);
+    } catch (e){
+        next({http_code: 400, code: 'not-found', message: 'No posts yet'});
+    }
+
 })
-router.get('/:postId', async (req, res) =>{
+router.get('/:postId', async (req, res, next) =>{
     const postId = req.postId;
-    res.json(await repo.getOne(postId));
+    if (typeof postId != 'number' || postId <= 0) {
+        next({http_code: 400, code: 'invalid-post-id', message: 'Input field `post-id` is invalid format'});
+        return;
+    }
+    try {
+        let post = await repo.getOne(postId);
+        res.json(post);
+    } catch (e) {
+        next({http_code: 404, code: 'not-found', message: 'No such post'});
+    }
+
 })
 router.post('/', async (req, res) =>{
     const postBody = req.body;

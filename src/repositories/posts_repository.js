@@ -43,7 +43,8 @@ class PostsRepository{
     }
     async deleteOne(id){
         const db = pgp(connection)
-        const record = await db.one('DELETE id, title, author FROM posts WHERE id=$1 RETURNING id, title, author', id)
+        const record = await db.one(
+            'DELETE id, title, author FROM posts WHERE id=$1 RETURNING id, title, author', id)
         return record;
     }
 }
