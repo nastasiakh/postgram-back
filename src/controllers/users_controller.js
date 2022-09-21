@@ -1,6 +1,6 @@
 const express = require('express')
-const {as} = require("pg-promise");
 const router = express.Router()
+const {UsersRepository} = require('../repositories/users_repository')
 
 const repo = new UsersRepository()
 
@@ -79,3 +79,5 @@ router.delete('/:userId', async(req, res, next) => {
     }
 
 })
+
+module.exports = router;

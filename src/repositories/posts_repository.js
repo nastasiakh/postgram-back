@@ -1,5 +1,6 @@
 const pgp = require('pg-promise')();
 const connection = require("../helpers/db_connection");
+
 class PostsRepository{
     async getAll(){
         const db = pgp(connection)
