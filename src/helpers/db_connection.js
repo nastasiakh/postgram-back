@@ -1,4 +1,6 @@
-const dbConnection = {
+const pgp = require('pg-promise')();
+
+const connection = {
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
     database: process.env.DATABASE_DB,
@@ -6,4 +8,6 @@ const dbConnection = {
     password: process.env.DATABASE_USER,
     allowExitOnIdle: true
 }
-module.exports = dbConnection
+const db = pgp(connection)
+
+module.exports = {db}

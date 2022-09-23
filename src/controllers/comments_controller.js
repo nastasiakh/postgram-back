@@ -11,8 +11,8 @@ router.get('/', async (req, res, next) =>{
     } catch (e){
         next({http_code: 400, code: 'not-found', message: 'No posts yet'});
     }
-
 })
+
 router.get('/:commentId', async (req, res, next) =>{
     const commentId = parseInt(req.params.commentId);
     if (typeof commentId != 'number' || commentId <= 0) {
@@ -25,8 +25,8 @@ router.get('/:commentId', async (req, res, next) =>{
     } catch (e) {
         next({http_code: 404, code: 'not-found', message: 'No such post'});
     }
-
 })
+
 router.get('/:postId', async (req, res, next) =>{
     const postId = req.postId;
     if (typeof postId != 'number' || postId <= 0) {
@@ -39,21 +39,24 @@ router.get('/:postId', async (req, res, next) =>{
     } catch (e) {
         next({http_code: 404, code: 'not-found', message: 'No such post'});
     }
-
 })
+
 router.post('/', async (req, res) =>{
     const commentBody = req.body;
     res.json(await repo.create(commentBody));
 })
+
 router.put('/', async (req, res) =>{
     const commentBody = req.body;
     res.json(await repo.replaceOne(commentBody));
 })
+
 router.patch('/:postId', async (req, res) =>{
     const commentId = parseInt(req.params.commentId);
     const commentBody = req.body;
     res.json(await repo.updateOne(commentId, commentBody));
 })
+
 router.delete('/:commentId', async(req, res) =>{
     const commentId = parseInt(req.params.commentId);
     const result = await repo.getAll()

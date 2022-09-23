@@ -10,6 +10,7 @@ const paramsSettings = require('./helpers/paramsSettings')
 app.get('/', (req, res) => {
     res.send('hello from first route')
 })
+
 app.use(bodyParser.json());
 app.use('/posts', posts);
 app.use('/users', users);

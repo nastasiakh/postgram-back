@@ -11,8 +11,8 @@ router.get('/', async (req, res, next) =>{
     } catch (e){
         next({http_code: 400, code: 'not-found', message: 'No posts yet'});
     }
-
 })
+
 router.get('/:postId', async (req, res, next) =>{
     const postId = req.postId;
     if (typeof postId != 'number' || postId <= 0) {
@@ -25,21 +25,24 @@ router.get('/:postId', async (req, res, next) =>{
     } catch (e) {
         next({http_code: 404, code: 'not-found', message: 'No such post'});
     }
-
 })
+
 router.post('/', async (req, res) =>{
     const postBody = req.body;
     res.json(await repo.create(postBody));
 })
+
 router.put('/', async (req, res) =>{
     const postBody = req.body;
     res.json(await repo.replaceOne(postBody));
 })
+
 router.patch('/:postId', async (req, res) =>{
     const postId = req.postId;
     const postBody = req.body;
     res.json(await repo.updateOne(postId, postBody));
 })
+
 router.delete('/:postId', async(req, res) =>{
     const postId = req.postId
     const result = await repo.getAll()
